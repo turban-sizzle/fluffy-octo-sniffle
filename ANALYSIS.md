@@ -10,9 +10,19 @@ Via un conteneur docker en mode standalone en suivant la documentation et les pr
 docker run --name sonarqube-test -d -p 9000:9000 sonarqube:latest
 ```
 
+Attendre que le message `SonarQube is operational` dans les logs
+
+```bash
+docker logs sonarqube-test
+```
+
 ## Déclencher une analyse statique
 
-Créer le projet dans SonarQube.
+Créer le projet dans SonarQube et enregister le nom dans le fichier de configuration `sonar-project.properties`
+
+```properties
+sonar.projectKey=webapp
+```
 
 Créer un token d'accès à SonarQube.
 
@@ -35,7 +45,7 @@ Déclencher l'analyse statique et soumettre le résultat au serveur SonarQube.
 ```bash
 YOUR_REPO="."
 SONARQUBE_URL="sonarqube:9000"
-docker run --rm -e SONAR_HOST_URL="http://${SONARQUBE_URL}" -e SONAR_TOKEN="sqp_f3c63a7e16444d5997c134bd924260c5c36308b7" --network sonar_network -v "${YOUR_REPO}:/usr/src" sonarsource/sonar-scanner-cli
+docker run --rm -e SONAR_HOST_URL="http://${SONARQUBE_URL}" -e SONAR_TOKEN="<$your_sonar_token>" --network sonar_network -v "${YOUR_REPO}:/usr/src" sonarsource/sonar-scanner-cli
 ```
 
 ### SonarScanner for Python
