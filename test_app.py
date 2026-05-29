@@ -1,5 +1,6 @@
 import pytest
 import json
+from flask import url_for
 
 from app import app
 from app import Water
@@ -32,14 +33,14 @@ def test_request_example_water(client, monkeypatch):
     assert result['water'] == 100
 
 def test_add_water_missing(client):
-    response = client.get('/add_water')
+    response = client.put('/add_water')
     result = json.loads(response.data)
     assert len(result.keys()) == 0
     
 def test_add_water(client, monkeypatch):
     monkeypatch.setattr(Water, 'read_water', lambda : {'water': 100})
     monkeypatch.setattr(Water, 'save_water', lambda x: x)
-    response = client.get('/add_water')
+    response = client.put('/add_water')
     result = json.loads(response.data)
     assert 'water' in result
     assert 'adding' in result
@@ -49,7 +50,7 @@ def test_add_water(client, monkeypatch):
 def test_add_water_already_added(client, monkeypatch):
     monkeypatch.setattr(Water, 'read_water', lambda : {'water': 100, 'adding': []})
     monkeypatch.setattr(Water, 'save_water', lambda x: x)
-    response = client.get('/add_water')
+    response = client.put('/add_water')
     result = json.loads(response.data)
     assert 'water' in result
     assert 'adding' in result
@@ -57,30 +58,30 @@ def test_add_water_already_added(client, monkeypatch):
     assert result['adding'][0]['quantity'] == 10
     
 def test_add_water_user_missing(client):
-    response = client.get('/add_water/1')
+    response = client.put('/add_water/1')
     result = json.loads(response.data)
     assert len(result.keys()) == 0
 
 def test_add_water_user(client, monkeypatch):
-    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 100})
-    monkeypatch.setattr(Water, 'save_water_by_user', lambda x, userId: x)
-    response = client.get('/add_water/1')
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda user_id : {'water': 100})
+    monkeypatch.setattr(Water, 'save_water_by_user', lambda x, user_id: x)
+    response = client.put('/add_water/1')
     result = json.loads(response.data)
     assert 'water' in result
     assert result['water'] == 110
 
 def test_check_alert_missing(client):
-    response = client.get('/add_alert/1')
+    response = client.get('/check_alert/1')
     assert response.text == 'missing water information'
 
 def test_check_alert_over_10(client, monkeypatch):
-    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 100})
-    response = client.get('/add_alert/1')
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda user_id : {'water': 100})
+    response = client.get('/check_alert/1')
     assert response.text == 'everything is ok'
 
 def test_check_alert_under_10(client, monkeypatch):
-    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 8})
-    response = client.get('/add_alert/1')
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda user_id : {'water': 8})
+    response = client.get('/check_alert/1')
     assert response.text == 'alert missing water'
 
 

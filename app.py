@@ -16,32 +16,34 @@ class Water():
                 water = json.loads(data)
         return water
 
-    def read_water_by_user(userId, water_prefix = 'water'):
+    @staticmethod
+    def read_water_by_user(user_id, water_prefix = 'water'):
         water = {}
-        water_path = f'./{water_prefix}_{userId}.json'
+        water_path = f'./{water_prefix}_{user_id}.json'
         if os.path.isfile(water_path):    
             with open(water_path, 'r') as f:
                 data = f.read()
                 water = json.loads(data)
         return water
 
+    @staticmethod
     def save_water(water, water_path='./water.json'):
         with open(water_path, 'w') as f:
             f.write(json.dumps(water))
 
-
-    def save_water_by_user(water, userId, water_prefix='water'):
-        with open(f'./{water_prefix}_{userId}.json', 'w') as f:
+    @staticmethod
+    def save_water_by_user(water, user_id, water_prefix='water'):
+        with open(f'./{water_prefix}_{user_id}.json', 'w') as f:
             f.write(json.dumps(water))
 
 # Ajoute de l'eau
-@app.route('/add_water', methods=['GET'])
+@app.route('/add_water', methods=['PUT'])
 def add_water():
     water = Water.read_water()
     if 'water' in water:
         print(water)
         water["water"] += 10
-        if not "adding" in water.keys():
+        if "adding" not in water.keys():
             water["adding"] = [{'added_at': str(datetime.datetime.now()), 'quantity': 10}]
             return Water.save_water(water)
         else:
@@ -49,30 +51,25 @@ def add_water():
             return Water.save_water(water)
     return water
 
-import tempfile
-
 # Get water
 @app.route('/water', methods=['GET'])
 def water():
-    filename = tempfile.mktemp()
-    logfile = open(filename, 'a')
-    logfile.write(f'getting water at {datetime.datetime.now()}')
+    app.logger.info(f'getting water at {datetime.datetime.now()}')
     return Water.read_water()
-    logfile.close()
 
 
-@app.route('/add_water/<user_id>')
+@app.route('/add_water/<user_id>', methods=['PUT'])
 def add_water_user(user_id):
-    water = Water.read_water_by_user(userId=user_id)
+    water = Water.read_water_by_user(user_id=user_id)
     if 'water' in water:
         print(water)
         water["water"] += 10
         Water.save_water_by_user(water, user_id)
     return water
 
-@app.route('/add_alert/<user_id>')
+@app.route('/check_alert/<user_id>', methods=['GET'])
 def check_alert(user_id):
-    water = Water.read_water_by_user(userId=user_id)
+    water = Water.read_water_by_user(user_id=user_id)
     if 'water' in water:
         if water['water'] < 10:
             return 'alert missing water'
@@ -80,8 +77,8 @@ def check_alert(user_id):
             return 'everything is ok'
     return 'missing water information'
 
-if not __name__ == '__main__':
-    print('using as import')
-else:
+if __name__ == '__main__':
     app.run(debug=True)
+else:
+    print('using as import')
 
