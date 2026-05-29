@@ -89,6 +89,25 @@ uv add flask
 uv add pytest --dev
 ```
 
+Ajouter le module pytest-cov
+
+```bash
+uv add pytest-cov --dev
+```
+
+Exécuter les tests en activante la production du rapport de couverture de test
+
+```bash
+uv run pytest --cov . --cov-report xml
+```
+
+Convertir le fichier sqlite `.coverage` en fichier xml
+
+
+```bash
+uv run coverage xml
+```
+
 Configurer l'emplacement du fichier de couverture de code dans le fichier `sonar-projet.properties` comme indiqué dans la [documentation](https://docs.sonarsource.com/sonarqube-server/2025.1/analyzing-source-code/test-coverage/python-test-coverage).
 
 ```properties

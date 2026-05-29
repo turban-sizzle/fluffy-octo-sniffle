@@ -9,4 +9,5 @@ services:
             - SONAR_HOST_URL=http://sonarqube:9000
             - SONAR_TOKEN=sqa_31c555e7e23233b40688c0f1641b37a180031fdc
         volumes:
-            - "/home/gael/Projects/argonaultes/2025-2026/correction-evaluation-deve846/:/usr/src"
+            - ".:/usr/src"
+#            - "/home/gael/Projects/argonaultes/2025-2026/correction-evaluation-deve846/:/usr/src"
