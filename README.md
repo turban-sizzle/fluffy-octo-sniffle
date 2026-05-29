@@ -1,5 +1,12 @@
 # WATER
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=turban-sizzle_fluffy-octo-sniffle&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=turban-sizzle_fluffy-octo-sniffle)
+
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=turban-sizzle_fluffy-octo-sniffle&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=turban-sizzle_fluffy-octo-sniffle)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=turban-sizzle_fluffy-octo-sniffle&metric=coverage)](https://sonarcloud.io/summary/new_code?id=turban-sizzle_fluffy-octo-sniffle)
+
+
 ## Présentation
 
 Water est une application de suivi de consommation d'eau.
