@@ -51,9 +51,28 @@ def test_add_water_user_missing(client):
     result = json.loads(response.data)
     assert len(result.keys()) == 0
 
-def test_check_alert(client):
+def test_add_water_user(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 100})
+    monkeypatch.setattr(Water, 'save_water_by_user', lambda x, userId: x)
+    response = client.get('/add_water/1')
+    result = json.loads(response.data)
+    assert 'water' in result
+    assert result['water'] == 110
+
+def test_check_alert_missing(client):
     response = client.get('/add_alert/1')
     assert response.text == 'missing water information'
+
+def test_check_alert_over_10(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 100})
+    response = client.get('/add_alert/1')
+    assert response.text == 'everything is ok'
+
+def test_check_alert_under_10(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda userId : {'water': 8})
+    response = client.get('/add_alert/1')
+    assert response.text == 'alert missing water'
+
 
 # Test Methods
 
