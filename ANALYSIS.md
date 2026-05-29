@@ -61,10 +61,20 @@ services:
         image: sonarsource/sonar-scanner-cli
         environment:
             - SONAR_HOST_URL=http://sonarqube:9000
-            - SONAR_TOKEN=sqp_b317940c89400cfd9b964da1a60097e4567e1d40
+            - SONAR_TOKEN=sqp_1f6ade3ee9215a1ec43f95794f20a79c256cd68e
         volumes:
-            - "./:/usr/src"
+            - "/home/gael/Projects/argonaultes/2025-2026/correction-evaluation-deve846/:/usr/src"
 
 ```
 
 ### SonarScanner for Python
+
+TODO
+
+## Déclencher une analyse dynamique
+
+Configurer l'emplacement du fichier de couverture de code dans le fichier `sonar-projet.properties` comme indiqué dans la [documentation](https://docs.sonarsource.com/sonarqube-server/2025.1/analyzing-source-code/test-coverage/python-test-coverage).
+
+```properties
+sonar.python.coverage.reportPaths=coverage.xml
+```

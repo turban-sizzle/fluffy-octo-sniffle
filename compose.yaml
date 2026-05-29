@@ -7,6 +7,6 @@ services:
         image: sonarsource/sonar-scanner-cli
         environment:
             - SONAR_HOST_URL=http://sonarqube:9000
-            - SONAR_TOKEN=sqp_1f6ade3ee9215a1ec43f95794f20a79c256cd68e
+            - SONAR_TOKEN=sqa_31c555e7e23233b40688c0f1641b37a180031fdc
         volumes:
-            - "./:/usr/src"
+            - "/home/gael/Projects/argonaultes/2025-2026/correction-evaluation-deve846/:/usr/src"
