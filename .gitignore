@@ -5,3 +5,4 @@ flaskenv
 .coverage
 coverage.xml
 .venv
+water*.json
