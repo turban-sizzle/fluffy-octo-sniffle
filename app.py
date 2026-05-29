@@ -1,6 +1,7 @@
 from flask import Flask
 import json
 import datetime
+import os
 
 app = Flask(__name__)
 
@@ -10,17 +11,21 @@ class Water():
         return self
 
 def read_water():
-    water = None
-    with open('./water.json', 'r') as f:
-        data = f.read()
-        water = json.loads(data)
+    water = {}
+    water_path = './water.json'
+    if os.path.isfile(water_path):
+        with open(water_path, 'r') as f:
+            data = f.read()
+            water = json.loads(data)
     return water
 
 def read_water_by_user(userId):
-    water = None
-    with open(f'./water{userId}.json', 'r') as f:
-        data = f.read()
-        water = json.loads(data)
+    water = {}
+    water_path = f'./water{userId}.json'
+    if os.path.isfile(water_path):    
+        with open(water_path, 'r') as f:
+            data = f.read()
+            water = json.loads(data)
     return water
 
 def save_water(water):
