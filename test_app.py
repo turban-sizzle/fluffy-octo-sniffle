@@ -45,6 +45,16 @@ def test_add_water(client, monkeypatch):
     assert 'adding' in result
     assert len(result['adding']) == 1
     assert result['adding'][0]['quantity'] == 10
+
+def test_add_water_already_added(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water', lambda : {'water': 100, 'adding': []})
+    monkeypatch.setattr(Water, 'save_water', lambda x: x)
+    response = client.get('/add_water')
+    result = json.loads(response.data)
+    assert 'water' in result
+    assert 'adding' in result
+    assert len(result['adding']) == 1
+    assert result['adding'][0]['quantity'] == 10
     
 def test_add_water_user_missing(client):
     response = client.get('/add_water/1')
