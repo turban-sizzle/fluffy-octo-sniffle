@@ -18,7 +18,8 @@ def client(defapp):
 
 # Test routes
 
-def test_request_example_missing(client):
+def test_request_example_missing(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water', lambda : {})
     response = client.get('/water')
     result = json.loads(response.data)
     assert 'water' not in result
@@ -31,7 +32,8 @@ def test_request_example_water(client, monkeypatch):
     assert 'water' in result
     assert result['water'] == 100
 
-def test_add_water_missing(client):
+def test_add_water_missing(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water', lambda : {})
     response = client.put('/add_water')
     result = json.loads(response.data)
     assert len(result.keys()) == 0
@@ -48,7 +50,8 @@ def test_add_water(client, monkeypatch, water):
     assert result['adding'][0]['quantity'] == 10
 
     
-def test_add_water_user_missing(client):
+def test_add_water_user_missing(client, monkeypatch):
+    monkeypatch.setattr(Water, 'read_water_by_user', lambda user_id : {})
     response = client.put('/add_water/1')
     result = json.loads(response.data)
     assert len(result.keys()) == 0

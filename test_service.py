@@ -1,15 +1,7 @@
 from service import Water
 import pytest
 import datetime
-import os
 
-# Test Methods
-
-# class PathMonkey:
-    
-#      @staticmethod
-#      def isfile(path):
-#          return True
 
 def test_method_read_water(monkeypatch):
     
