@@ -41,14 +41,16 @@ def save_water_by_user(water, userId):
 @app.route('/add_water', methods=['GET'])
 def add_water():
     water = read_water()
-    print(water)
-    water["water"] += 10
-    if not "adding" in water.keys():
-        water["adding"] = [{'added_at': str(datetime.datetime.now()), 'quantity': 10}]
-        return save_water(water)
-    else:
-        water["adding"].append({'added_at': datetime.datetime.now(), 'quantity': 10})
-        return save_water(water)
+    if 'water' in water:
+        print(water)
+        water["water"] += 10
+        if not "adding" in water.keys():
+            water["adding"] = [{'added_at': str(datetime.datetime.now()), 'quantity': 10}]
+            return save_water(water)
+        else:
+            water["adding"].append({'added_at': datetime.datetime.now(), 'quantity': 10})
+            return save_water(water)
+    return water
 
 import tempfile
 
@@ -65,18 +67,21 @@ def water():
 @app.route('/add_water/<user_id>')
 def add_water_user(user_id):
     water = read_water_by_user(userId=user_id)
-    print(water)
-    water["water"] += 10
-    save_water_by_user(water, user_id)
+    if 'water' in water:
+        print(water)
+        water["water"] += 10
+        save_water_by_user(water, user_id)
     return water
 
 @app.route('/add_alert/<user_id>')
 def check_alert(user_id):
     water = read_water_by_user(userId=user_id)
-    if water < 10:
-        return 'altert missing water'
-    else:
-        return 'everything is ok'
+    if 'water' in water:
+        if water['water'] < 10:
+            return 'alert missing water'
+        else:
+            return 'everything is ok'
+    return 'missing water information'
 
 if not __name__ == '__main__':
     print('using as import')

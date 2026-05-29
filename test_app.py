@@ -17,7 +17,21 @@ def client(defapp):
 
 
 def test_request_example(client):
-    response = client.get("/water")
+    response = client.get('/water')
     result = json.loads(response.data)
-    assert 'water' in result
-    assert 70 == result['water']
+    assert 'water' not in result
+    assert len(result.keys()) == 0
+
+def test_add_water(client):
+    response = client.get('/add_water')
+    result = json.loads(response.data)
+    assert len(result.keys()) == 0
+    
+def test_add_water_user(client):
+    response = client.get('/add_water/1')
+    result = json.loads(response.data)
+    assert len(result.keys()) == 0
+
+def test_check_alert(client):
+    response = client.get('/add_alert/1')
+    assert response.text == 'missing water information'
