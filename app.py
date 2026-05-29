@@ -30,11 +30,13 @@ class Water():
     def save_water(water, water_path='./water.json'):
         with open(water_path, 'w') as f:
             f.write(json.dumps(water))
+        return water
 
     @staticmethod
     def save_water_by_user(water, user_id, water_prefix='water'):
         with open(f'./{water_prefix}_{user_id}.json', 'w') as f:
             f.write(json.dumps(water))
+        return water
 
 # Ajoute de l'eau
 @app.route('/add_water', methods=['PUT'])
@@ -47,7 +49,7 @@ def add_water():
             water["adding"] = [{'added_at': str(datetime.datetime.now()), 'quantity': 10}]
             return Water.save_water(water)
         else:
-            water["adding"].append({'added_at': datetime.datetime.now(), 'quantity': 10})
+            water["adding"].append({'added_at': str(datetime.datetime.now()), 'quantity': 10})
             return Water.save_water(water)
     return water
 
