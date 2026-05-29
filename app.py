@@ -1,42 +1,10 @@
 from flask import Flask
-import json
 import datetime
-import os
+from service import Water
+
 
 app = Flask(__name__)
 
-class Water():
-
-    @staticmethod
-    def read_water(water_path = './water.json'):
-        water = {}
-        if os.path.isfile(water_path):
-            with open(water_path, 'r') as f:
-                data = f.read()
-                water = json.loads(data)
-        return water
-
-    @staticmethod
-    def read_water_by_user(user_id, water_prefix = 'water'):
-        water = {}
-        water_path = f'./{water_prefix}_{user_id}.json'
-        if os.path.isfile(water_path):    
-            with open(water_path, 'r') as f:
-                data = f.read()
-                water = json.loads(data)
-        return water
-
-    @staticmethod
-    def save_water(water, water_path='./water.json'):
-        with open(water_path, 'w') as f:
-            f.write(json.dumps(water))
-        return water
-
-    @staticmethod
-    def save_water_by_user(water, user_id, water_prefix='water'):
-        with open(f'./{water_prefix}_{user_id}.json', 'w') as f:
-            f.write(json.dumps(water))
-        return water
 
 # Ajoute de l'eau
 @app.route('/add_water', methods=['PUT'])
