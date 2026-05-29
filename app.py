@@ -39,13 +39,14 @@ def add_water_user(user_id):
 
 @app.route('/check_alert/<user_id>', methods=['GET'])
 def check_alert(user_id):
+    threshold = 10
     water = Water.read_water_by_user(user_id=user_id)
     if water and 'water' in water:
-        if water['water'] < 10:
-            return 'alert missing water'
+        if water['water'] < threshold:
+            return {'msg': 'alert missing water', 'threshold': threshold}
         else:
-            return 'everything is ok'
-    return 'missing water information'
+            return {'msg': 'everything is ok', 'threshold': threshold}
+    return {'msg': 'missing water information', 'threshold': threshold}
 
 if __name__ == '__main__':
     app.run(debug=True)

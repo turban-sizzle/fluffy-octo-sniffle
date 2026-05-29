@@ -68,6 +68,7 @@ def test_add_water_user(client, monkeypatch):
 def test_check_alert_over_10(client, monkeypatch, result_read_water, expected):
     monkeypatch.setattr(Water, 'read_water_by_user', lambda user_id : result_read_water)
     response = client.get('/check_alert/1')
-    assert response.text == expected
+    result = json.loads(response.data)
+    assert  result['msg'] == expected
 
 

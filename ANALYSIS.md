@@ -116,7 +116,7 @@ sonar.python.coverage.reportPaths=coverage.xml
 
 Elements à corriger
 
-Rendre plus robuste l'exécution des tests : ne pas être perturbé par la présence éventuelle d'un fichier de configuration/data `water.json`
+~~Rendre plus robuste l'exécution des tests : ne pas être perturbé par la présence éventuelle d'un fichier de configuration/data `water.json`~~
 
 ~~La duplication du code de test nuit à la maintenabilité, il faut réduire et mutualiser les fonctions de test, en utilisant notamment les paramètres de test~~
 
