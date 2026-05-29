@@ -10,31 +10,30 @@ class Water():
         self.water = 0
         return self
 
-def read_water():
+def read_water(water_path = './water.json'):
     water = {}
-    water_path = './water.json'
     if os.path.isfile(water_path):
         with open(water_path, 'r') as f:
             data = f.read()
             water = json.loads(data)
     return water
 
-def read_water_by_user(userId):
+def read_water_by_user(userId, water_prefix = 'water'):
     water = {}
-    water_path = f'./water{userId}.json'
+    water_path = f'./{water_prefix}_{userId}.json'
     if os.path.isfile(water_path):    
         with open(water_path, 'r') as f:
             data = f.read()
             water = json.loads(data)
     return water
 
-def save_water(water):
-    with open('./water.json', 'w') as f:
+def save_water(water, water_path='./water.json'):
+    with open(water_path, 'w') as f:
         f.write(json.dumps(water))
 
 
-def save_water_by_user(water, userId):
-    with open(f'./water{userId}.json', 'w') as f:
+def save_water_by_user(water, userId, water_prefix='water'):
+    with open(f'./{water_prefix}_{userId}.json', 'w') as f:
         f.write(json.dumps(water))
 
 # Ajoute de l'eau
