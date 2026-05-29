@@ -125,3 +125,6 @@ Aligner la réponse de la route `check_alert` avec les autres réponses.
 ~~Séparer le code spécifique aux controleurs (partie interface flask) du code spécifiques aux classes de Service~~
 
 ~~Séparer en conséquence les tests.~~
+
+## Configurer Github avec SonarQube Cloud
+
