@@ -4,3 +4,4 @@ __pycache__
 flaskenv
 .coverage
 coverage.xml
+.venv

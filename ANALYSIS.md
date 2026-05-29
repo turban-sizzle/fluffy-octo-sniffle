@@ -73,6 +73,22 @@ TODO
 
 ## Déclencher une analyse dynamique
 
+Transformer le projet en projet UV
+
+```bash
+uv init --bare .
+```
+
+Une fois le projet uv appliqué, installer les modules nécessaires
+
+```bash
+uv add flask
+```
+
+```bash
+uv add pytest --dev
+```
+
 Configurer l'emplacement du fichier de couverture de code dans le fichier `sonar-projet.properties` comme indiqué dans la [documentation](https://docs.sonarsource.com/sonarqube-server/2025.1/analyzing-source-code/test-coverage/python-test-coverage).
 
 ```properties
