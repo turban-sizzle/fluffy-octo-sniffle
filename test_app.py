@@ -2,7 +2,7 @@ import pytest
 import json
 
 from app import app
-from app import read_water, read_water_by_user, save_water, save_water_by_user
+from app import Water
 
 @pytest.fixture()
 def defapp():
@@ -41,18 +41,18 @@ def test_check_alert(client):
 # Test Methods
 
 def test_method_read_water():
-    result_water = read_water(water_path='./test_water.json')
+    result_water = Water.read_water(water_path='./test_water.json')
     assert 'water' in result_water
     assert result_water['water'] == 8
     
 def test_method_read_water_by_user():
-    result_water = read_water_by_user(1, 'test_water')
+    result_water = Water.read_water_by_user(1, 'test_water')
     assert 'water' in result_water
     assert result_water['water'] == 6
     
     
 def test_method_save_water():
-    save_water(12, water_path='./test_dd_water.json')
+    Water.save_water(12, water_path='./test_dd_water.json')
     
 def test_method_save_water_by_user():
-    save_water_by_user(1, 1, 'test_dd_water')
+    Water.save_water_by_user(1, 1, 'test_dd_water')
