@@ -45,7 +45,26 @@ Déclencher l'analyse statique et soumettre le résultat au serveur SonarQube.
 ```bash
 YOUR_REPO="."
 SONARQUBE_URL="sonarqube:9000"
-docker run --rm -e SONAR_HOST_URL="http://${SONARQUBE_URL}" -e SONAR_TOKEN="<$your_sonar_token>" --network sonar_network -v "${YOUR_REPO}:/usr/src" sonarsource/sonar-scanner-cli
+SONAR_TOKEN="sqp_b317940c89400cfd9b964da1a60097e4567e1d40"
+docker run --rm -e SONAR_HOST_URL="http://${SONARQUBE_URL}" -e SONAR_TOKEN=$SONAR_TOKEN --network sonar_network -v "${YOUR_REPO}:/usr/src" sonarsource/sonar-scanner-cli
+```
+
+Réaliser un équivalent avec compose
+
+```yaml
+services:
+    sonarqube:
+        image: sonarqube:latest
+        ports:
+            - "9000:9000"
+    cli:
+        image: sonarsource/sonar-scanner-cli
+        environment:
+            - SONAR_HOST_URL=http://sonarqube:9000
+            - SONAR_TOKEN=sqp_b317940c89400cfd9b964da1a60097e4567e1d40
+        volumes:
+            - "./:/usr/src"
+
 ```
 
 ### SonarScanner for Python
